@@ -52,31 +52,38 @@ const Customizer = () => {
   }
 
   const handleSubmit = async (type) => {
-    if(!prompt) return alert("Please enter a prompt");
-
+    if (!prompt) return alert("Please enter a prompt");
+  
     try {
       setGeneratingImg(true);
-
-      const response = await fetch('http://localhost:8080/api/v1/dalle', {
+  
+      // Utilize Flask server to fetch images from Hugging Face's API
+      const response = await fetch('http://localhost:5000/generate-image', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-            },
+        },
         body: JSON.stringify({
-          prompt,
+          prompt, // This sends the user's prompt to your Flask server
         })
-      })
-
+      });
+  
       const data = await response.json();
-
-      handleDecals(type, `data:image/png;base64,${data.photo}`)
+  
+      if(data.image) {
+        handleDecals(type, `data:image/png;base64,${data.image}`);
+      } else if(data.error) {
+        alert(data.error);
+      }
+  
     } catch (error) {
-      alert(error)
+      console.error('Error:', error);
+      alert('Failed to generate image');
     } finally {
       setGeneratingImg(false);
       setActiveEditorTab("");
     }
-  }
+  };
 
   const handleDecals = (type, result) => {
     const decalType = DecalTypes[type];
