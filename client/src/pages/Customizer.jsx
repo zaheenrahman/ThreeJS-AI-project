@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSnapshot } from 'valtio';
+import axios from 'axios';
 
 import config from '../config/config';
 import state from '../store';
@@ -54,28 +55,27 @@ const Customizer = () => {
   const handleSubmit = async (type) => {
     if (!prompt) return alert("Please enter a prompt");
   
-    try {
-      setGeneratingImg(true);
+    setGeneratingImg(true);
   
-      // Utilize Flask server to fetch images from Hugging Face's API
-      const response = await fetch('http://localhost:5000/generate-image', {
-        method: 'POST',
+    try {
+      const response = await axios.post('https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0', {
+        inputs: prompt,
+      }, {
         headers: {
+          'Authorization': 'Bearer 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',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          prompt, // This sends the user's prompt to your Flask server
-        })
+        responseType: 'arraybuffer'  // Ensure you receive an ArrayBuffer
       });
   
-      const data = await response.json();
+      // Convert ArrayBuffer to Base64
+      const base64 = arrayBufferToBase64(response.data);
   
-      if(data.image) {
-        handleDecals(type, `data:image/png;base64,${data.image}`);
-      } else if(data.error) {
-        alert(data.error);
+      if (base64) {
+        handleDecals(type, `data:image/png;base64,${base64}`);
+      } else {
+        alert('No image received');
       }
-  
     } catch (error) {
       console.error('Error:', error);
       alert('Failed to generate image');
@@ -84,6 +84,16 @@ const Customizer = () => {
       setActiveEditorTab("");
     }
   };
+  
+  function arrayBufferToBase64(buffer) {
+    var binary = '';
+    var bytes = new Uint8Array(buffer);
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  }
 
   const handleDecals = (type, result) => {
     const decalType = DecalTypes[type];
