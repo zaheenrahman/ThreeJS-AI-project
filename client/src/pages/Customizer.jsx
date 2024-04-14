@@ -9,7 +9,7 @@ import { download } from '../assets';
 import { downloadCanvasToImage, reader } from '../config/helpers';
 import { EditorTabs, FilterTabs, DecalTypes } from '../config/constants';
 import { fadeAnimation, slideAnimation } from '../config/motion';
-import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../components';
+import { AIPicker, ColorPicker, CustomButton, FilePicker, DecalSlider, Tab } from '../components';
 
 const Customizer = () => {
   const snap = useSnapshot(state);
@@ -44,56 +44,60 @@ const Customizer = () => {
           handleSubmit={handleSubmit}
         />
       case "productpicker":
-        return <ProductPicker
-
-        />
+        return <ProductPicker/>
+        case 'decalscale':
+          return <DecalSlider />
       default:
         return null;
     }
   }
 
-  const handleSubmit = async (type) => {
-    if (!prompt) return alert("Please enter a prompt");
-  
-    setGeneratingImg(true);
-  
-    try {
-      const response = await axios.post('https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0', {
-        inputs: prompt,
-      }, {
-        headers: {
-          'Authorization': 'Bearer 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',
-          'Content-Type': 'application/json'
-        },
-        responseType: 'arraybuffer'  // Ensure you receive an ArrayBuffer
-      });
-  
-      // Convert ArrayBuffer to Base64
-      const base64 = arrayBufferToBase64(response.data);
-  
-      if (base64) {
-        handleDecals(type, `data:image/png;base64,${base64}`);
-      } else {
-        alert('No image received');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Failed to generate image');
-    } finally {
-      setGeneratingImg(false);
-      setActiveEditorTab("");
-    }
+const handleLogoScaleChange = (e) => {
+    state.logoDecalScale = parseFloat(e.target.value);
   };
-  
-  function arrayBufferToBase64(buffer) {
-    var binary = '';
-    var bytes = new Uint8Array(buffer);
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
+
+const handleSubmit = async (type) => {
+  if (!prompt) return alert("Please enter a prompt");
+
+  setGeneratingImg(true);
+
+  try {
+    const response = await axios.post('https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0', {
+      inputs: prompt,
+    }, {
+      headers: {
+        'Authorization': 'Bearer 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',
+        'Content-Type': 'application/json'
+      },
+      responseType: 'arraybuffer'  // Ensure you receive an ArrayBuffer
+    });
+
+    // Convert ArrayBuffer to Base64
+    const base64 = arrayBufferToBase64(response.data);
+
+    if (base64) {
+      handleDecals(type, `data:image/png;base64,${base64}`);
+    } else {
+      alert('No image received');
     }
-    return window.btoa(binary);
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Failed to generate image');
+  } finally {
+    setGeneratingImg(false);
+    setActiveEditorTab("");
   }
+};
+
+function arrayBufferToBase64(buffer) {
+  var binary = '';
+  var bytes = new Uint8Array(buffer);
+  var len = bytes.byteLength;
+  for (var i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+}
 
   const handleDecals = (type, result) => {
     const decalType = DecalTypes[type];

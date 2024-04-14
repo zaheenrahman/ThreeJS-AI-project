@@ -39,7 +39,7 @@ const Shirt = () => {
           <Decal 
             position={[0, 0.04, 0.15]}
             rotation={[0, 0, 0]}
-            scale={0.15}
+            scale={snap.logoDecalScale}
             map={logoTexture}
             depthTest={false}
             depthWrite={true}
