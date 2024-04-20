@@ -20,3 +20,7 @@ Add other functions (Placement, rotation).
 Other objects (Mugs, etc).
 
 Integration with Shopify/Wordpress functionality.
+
+Working towards implement PoD, randomize, surprise me
+
+Utilizing Custom LoRas to implement as button/sliders or ability to use different checkpoints.
