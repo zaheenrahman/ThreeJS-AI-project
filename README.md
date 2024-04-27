@@ -1,8 +1,11 @@
-## 3D AI Customizer project
+## 3D AI Customizer Project Overview
 
 ### Updates:
 
-#### -3JS frontend with Vite+React (Done).
+#### 3JS Frontend with Vite+React: Fully set up for high-performance, interactive user interfaces.
+
+##### Slider for Decal Size: Users can now adjust decal sizes easily with a new slider control.
+##### API Integrations: Both backend and frontend are equipped to utilize a range of APIs, enhancing the system's robustness and scalability.
 
 #### -Added new slider functionality for decal size (Done).
 
@@ -13,14 +16,16 @@
 #### (Currently utilizing Axios for fetching huggingface SDXL API to display on vercel without backend API)
 
 
-#### Next:
+###Upcoming Features
 
-Add other functions (Placement, rotation).
+####Placement and Rotation Tools: Further control over decal customization with new placement and rotation capabilities.
 
-Other objects (Mugs, etc).
+####Expanded Product Line: Introducing new items like customizable mugs.
 
-Integration with Shopify/Wordpress functionality.
+####Innovative Features:
 
-Working towards implement PoD, randomize, surprise me
+####Print on Demand: Offering unique, made-to-order products.
 
-Utilizing Custom LoRas to implement as button/sliders or ability to use different checkpoints.
+####Randomize & Surprise Me: New features to spice up the user experience with random and surprise design options.
+
+####Custom LoRas Implementation: Enhancing user interaction with custom LoRas for intuitive controls, alongside experimenting with various AI model checkpoints.
