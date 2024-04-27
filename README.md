@@ -16,16 +16,16 @@
 #### (Currently utilizing Axios for fetching huggingface SDXL API to display on vercel without backend API)
 
 
-###Upcoming Features
+### Upcoming Features
 
-####Placement and Rotation Tools: Further control over decal customization with new placement and rotation capabilities.
+#### Placement and Rotation Tools: Further control over decal customization with new placement and rotation capabilities.
 
-####Expanded Product Line: Introducing new items like customizable mugs.
+#### Expanded Product Line: Introducing new items like customizable mugs.
 
-####Innovative Features:
+#### Innovative Features:
 
-####Print on Demand: Offering unique, made-to-order products.
+#### Print on Demand: Offering unique, made-to-order products.
 
-####Randomize & Surprise Me: New features to spice up the user experience with random and surprise design options.
+#### Randomize & Surprise Me: New features to spice up the user experience with random and surprise design options.
 
-####Custom LoRas Implementation: Enhancing user interaction with custom LoRas for intuitive controls, alongside experimenting with various AI model checkpoints.
+#### Custom LoRas Implementation: Enhancing user interaction with custom LoRas for intuitive controls, alongside experimenting with various AI model checkpoints.
